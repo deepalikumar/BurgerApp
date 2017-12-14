@@ -4,11 +4,17 @@ import BurgerIngredient from './BurgerIngredients/BurgerIngredient';
 
 
 const burger = (props) => {
-    const transformedIngredient = Object.keys(props.ingredient).map(igKey => {
+    let transformedIngredient = Object.keys(props.ingredient).map(igKey => {
         return [...Array(props.ingredient[igKey])].map ((_,index ) => {
             return <BurgerIngredient key={igKey + index } types={igKey} />
         })
-    })
+    }).reduce ((arr, el) => {
+        return arr.concat(el);
+    }, []);
+
+    if (transformedIngredient.length === 0) {
+        transformedIngredient = <p> Please start adding ingredients!</p>
+    }
     return (
         <div className={classes.Burger}>
             <BurgerIngredient types='bread-top' />
