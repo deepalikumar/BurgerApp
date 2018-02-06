@@ -86,10 +86,13 @@ class ContactData extends Component {
                         {value: 'cheapest', displayValue: 'Cheapest'}
                     ]
                 },
-                value: '',
+                validation: {},
+                value: 'cheapest',
+                valid: true,
                 touched: false
             }
         },
+        formIsValid: false,
         loading: false,
     }
 
@@ -116,6 +119,10 @@ class ContactData extends Component {
 
     checkValidity(value, rules) {
         let isValid = true;
+
+        if(!rules) {
+            return true;
+        }
         if (rules.required) {
             isValid = value.trim() !== '' && isValid;
         }
@@ -142,8 +149,13 @@ class ContactData extends Component {
         updatedFormElement.touched  = true;
         console.log(updatedFormElement);
         updatedOrderForm[inputIdentifier]  = updatedFormElement;
+
+        let formIsValid = true;
+        for (let inputIdentifier in updatedOrderForm) {
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid
+        }
         this.setState({
-            orderForm: updatedOrderForm
+            orderForm: updatedOrderForm, formIsValid: formIsValid
         })
     }
     render () {
@@ -168,7 +180,8 @@ class ContactData extends Component {
                     changed={(event) => this.inputChangedHandler(event, formElement.id)}
                 />
             ))}
-            <Button buttonType="Success" clicked={this.orderHandler}> ORDER </Button>
+            <Button buttonType="Success" clicked={this.orderHandler} 
+            disabled={!this.state.formIsValid}> ORDER </Button>
         </form>);
         if (this.state.loading) {
             form = <Spinner />;
