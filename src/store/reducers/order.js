@@ -31,7 +31,7 @@ const fetchOrdersStart = (state, action) => {
     return updateObject(state, { loading: true });
 };
 const fetchOrdersSuccess = (state, action) => {
-    return updateObject(state, { order: action.orders, loading: false });
+    return updateObject(state, { orders: action.orders, loading: false });
 }
 const fetchOrdersFailed = (state, action)  => {
     return updateObject(state, { loading: false });
