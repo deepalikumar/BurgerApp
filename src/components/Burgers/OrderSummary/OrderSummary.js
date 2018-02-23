@@ -1,13 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Aux from '../../../hoc/Aux/Aux';
 import Button from '../../UI/Button/Button';
 
-class OrderSummary extends Component {
-    componentWillUpdate() {
-        console.log('[OrderSummary] will update' );
-    }
-
-    render (){
+const orderSummary = () =>  {
     const ingredientSummary = Object.keys(this.props.ingredients)
         .map(igKey => {
              return (
@@ -29,9 +24,9 @@ class OrderSummary extends Component {
         <Button buttonType='Success' clicked={this.props.purchaseContinue}>CONTINUE </Button>
    </Aux>
     )
-    }
+    
 
 };
 
 
-export default OrderSummary;
+export default orderSummary;
